@@ -1,34 +1,39 @@
+/* sieve.c - It prompts the user to enter an integer N. It prints out
+ *           It prints out all the primes up to N included.
+ *           It uses a sieve method. As primes are found they are
+ *           stored in an array PRIMES and used as possible factors
+ *           for the next potential prime.
+ */
+
 #include <stdio.h>
 
-#define LIMIT 1500000 /*size of integers array*/
-#define PRIMES 100000 /*size of primes array*/
+#define NPRIMES  1000
+#define FALSE 0
+#define TRUE  1
 
-int main(){
-    int i,j,numbers[LIMIT];
-    int primes[PRIMES];
 
-    /*fill the array with natural numbers*/
-    for (i=0;i<LIMIT;i++){
-        numbers[i]=i+2;
+int main(void) {
+  int n;
+  int i,j;
+  int flag;
+  int primes[NPRIMES]; /*It will contain the primes smaller than n
+                        *that we have already encountered*/
+  int level;           /*1+Number of primes currently in PRIMES*/
+
+  /*Introduction*/
+  printf("Enter value of N > ");
+  scanf("%d",&n);
+  level = 0;
+
+  /*Main body*/
+  for(i=2;i<=n;i++) {
+    for(j = 0, flag = TRUE; j<level && flag; j++)
+      flag = (i%primes[j]);
+    if (flag) { /*I is a prime */
+      printf("%12d\n", i);
+      if (level < NPRIMES)
+	primes[level++] = i;
     }
-
-    /*sieve the non-primes*/
-    for (i=0;i<LIMIT;i++){
-        if (numbers[i]!=-1){
-            for (j=2*numbers[i]-2;j<LIMIT;j+=numbers[i])
-                numbers[j]=-1;
-        }
-    }
-
-    /*transfer the primes to their own array*/
-    j = 0;
-    for (i=0;i<LIMIT&&j<PRIMES;i++)
-        if (numbers[i]!=-1)
-            primes[j++] = numbers[i];
-
-    /*print*/
-    for (i=0;i<PRIMES;i++)
-        printf("%dn",primes[i]);
-
-return 0;
+  }
+  return 0;
 }
