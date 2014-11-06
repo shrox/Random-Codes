@@ -1,39 +1,46 @@
-/* sieve.c - It prompts the user to enter an integer N. It prints out
- *           It prints out all the primes up to N included.
- *           It uses a sieve method. As primes are found they are
- *           stored in an array PRIMES and used as possible factors
- *           for the next potential prime.
- */
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
 
-#include <stdio.h>
+int isprime(int n,int primes[]);
 
-#define NPRIMES  1000
-#define FALSE 0
-#define TRUE  1
+int main()
+{
+	int primes[1000000],n,x;
+	scanf("%d",&n);
 
+	for(x=0;x<n+1;x++)
+		{
+			primes[x]=x;
+			//~ printf("%d %d\n",primes[x],x);
+			//~ printf("HI\n");
+		}
+	
+	int p=2;
+	while(p!=1000)
+	{
+		for(x=p*p;x<1000000;x+=p)
+			{
+				primes[x] = 0;
+				//~ printf("BYE\n");
+			}
+		p++;
+		while((primes[p]=0))
+			p++;
+	}
+		
+	if (isprime(n,primes) == 1)
+		printf("True");
+	else
+		printf("False");
+	
+	return 0;
+}
 
-int main(void) {
-  int n;
-  int i,j;
-  int flag;
-  int primes[NPRIMES]; /*It will contain the primes smaller than n
-                        *that we have already encountered*/
-  int level;           /*1+Number of primes currently in PRIMES*/
-
-  /*Introduction*/
-  printf("Enter value of N > ");
-  scanf("%d",&n);
-  level = 0;
-
-  /*Main body*/
-  for(i=2;i<=n;i++) {
-    for(j = 0, flag = TRUE; j<level && flag; j++)
-      flag = (i%primes[j]);
-    if (flag) { /*I is a prime */
-      printf("%12d\n", i);
-      if (level < NPRIMES)
-	primes[level++] = i;
-    }
-  }
-  return 0;
+int isprime(int n, int primes[])
+{
+	if (primes[n] == 0)
+		return 0;
+	else
+		return 1;
 }
