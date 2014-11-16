@@ -6,9 +6,9 @@ p = 2
 while p!=1000:
 	for n in xrange(p*p,1000000,p):
             primes[n-1] = 0
-        p+=1
-        while primes[p]==0:
-			p+=1
+	p+=1
+	while primes[p]==0:
+		p+=1
 	
 
 def isprime(n):
