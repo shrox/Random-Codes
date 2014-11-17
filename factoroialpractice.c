@@ -14,7 +14,7 @@ int main()
 	{
 		for(y=0;A[y]!=-2 || carry!=0;y++)
 		{
-			printf("A %d y %d\n",A[y],y);
+			//~ printf("A %d y %d\n",A[y],y);
 			if(A[y]==-2)
 				A[y]=0;
 			z = A[y]*x+carry;
